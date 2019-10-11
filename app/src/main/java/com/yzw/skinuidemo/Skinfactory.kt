@@ -20,8 +20,6 @@ class Skinfactory : LayoutInflater.Factory2 {
     //定义装载需要换肤的容器
     val skinList = mutableListOf<SkinView>()
 
-    var attributeSet: AttributeSet? = null
-
     override fun onCreateView(
         parent: View?,
         name: String?,
@@ -30,22 +28,27 @@ class Skinfactory : LayoutInflater.Factory2 {
     ): View? {
         var view: View? = null
 //        for (index in 0 until attrs?.attributeCount!!) {
-//            Log.d("Skinfactory", attrs.getAttributeName(index))
+//            Log.d("Skinfactory", "$name == " + attrs.getAttributeName(index))
 //        }
         //如果是自定义控件，则直接去实例化
         if (name!!.contains(".")) {
-            view = onCreateView(name, context, attrs)
+            try {
+                view = LayoutInflater.from(context).createView(name, null, attrs)
+            } catch (e: Exception) {
+            }
         } else {
             //如果是不带包名的系统控件，则将全路径拼全
             types.forEach {
-                view = onCreateView("$it$name", context, attrs)
-                if (view != null)
+                try {
+                    view = LayoutInflater.from(context).createView("$it$name", null, attrs)
+                } catch (e: Exception) {
+                }
+                if (view != null) {
+                    Log.d("Skinfactory", "view = $it$name")
                     return@forEach
+                }
             }
         }
-
-        attributeSet = attrs
-
         //判断这个控件是否是要换肤的控件
         if (view != null) {
             parseView(view!!, attrs!!)
@@ -67,7 +70,7 @@ class Skinfactory : LayoutInflater.Factory2 {
             //执行构造方法
             view = constructor.newInstance(context, attrs) as View
         } catch (e: Exception) {
-            e.printStackTrace()
+            //e.printStackTrace()
         }
         return view
     }
@@ -152,6 +155,7 @@ class Skinfactory : LayoutInflater.Factory2 {
         if (list.isNotEmpty()) {
             skinList.add(SkinView(view, list))
         }
+        Log.d("Skinfactory", "list =${skinList.size}")
     }
 
     //执行换肤

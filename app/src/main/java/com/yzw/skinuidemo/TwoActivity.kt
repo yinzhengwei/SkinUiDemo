@@ -8,12 +8,7 @@ import android.os.Environment
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.PermissionChecker
-import android.util.AttributeSet
-import android.util.Log
-import android.util.Xml
 import android.view.View
-import android.view.ViewGroup
-import android.webkit.PermissionRequest
 
 class TwoActivity : BaseActivity() {
 
@@ -43,21 +38,6 @@ class TwoActivity : BaseActivity() {
         //获取换肤的apk插件
         SkinManager.loadApk("${Environment.getExternalStorageDirectory()}/skin.apk")
 
-
-        val viewGroup = window.decorView as ViewGroup
-
-        skinfactory!!.parseView(viewGroup.getChildAt(0), skinfactory!!.attributeSet!!)
-
-//        if (viewGroup.getChildAt(0) is ViewGroup) {
-//            val parser = resources.getXml(attachResID)
-//            val attrs = Xml.asAttributeSet(parser) as AttributeSet
-////            val view = viewGroup.getChildAt(0)
-////            Log.d("Skinfactory", viewGroup.resources.getResourceTypeName())
-//
-//            for (index in 0 until parser.attributeCount) {
-//                Log.d("Skinfactory", parser.getAttributeName(index))
-//            }
-//        }
         //开始执行换肤操作
         changeSkin()
     }
