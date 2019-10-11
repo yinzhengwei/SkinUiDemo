@@ -1,0 +1,7 @@
+# SkinUiDemo
+Android原生实现一键换肤
+
+项目中的skin为要换肤的插件module，本Demo只演示了界面background和textColor的切换，如果有其他的复杂属性，请自行完善。
+
+其中，skin插件请直接在color中更换颜色值即可，然后将skin打包，然后将skin.apk放在设备的sdcard根目录下，然后在主项目中的
+twoActivity中点击文案即可实现换肤的效果。
